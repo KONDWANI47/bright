@@ -81,10 +81,10 @@ class SchoolManagementAPITester:
     def test_create_student(self, student_data):
         """Create a student"""
         success, response = self.run_test(
-            f"Create Student - {student_data['name']}",
+            f"Create Student - {student_data['firstName']} {student_data['lastName']}",
             "POST",
             "api/students",
-            200,
+            201,  # POST should return 201 for creation
             data=student_data
         )
         if success and 'id' in response:
