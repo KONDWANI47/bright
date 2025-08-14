@@ -210,27 +210,47 @@ class NotificationResponse(BaseModel):
 
 # Utility functions
 def student_helper(student) -> dict:
-    # Map database fields to response model fields
-    name_parts = student.get("name", "").split(" ", 1)
-    first_name = name_parts[0] if name_parts else ""
-    last_name = name_parts[1] if len(name_parts) > 1 else ""
-    
-    return {
-        "id": student["id"],
-        "firstName": first_name,
-        "lastName": last_name,
-        "gender": student.get("gender", "Male"),  # Default value
-        "dob": student.get("dob", "2000-01-01"),  # Default value
-        "studentClass": student.get("class_name", ""),
-        "enrollmentDate": student.get("enrollmentDate", student["created_at"].strftime("%Y-%m-%d")),
-        "parentName": student.get("parent_name", ""),
-        "relationship": student.get("relationship", "Parent"),  # Default value
-        "parentPhone": student.get("contact_phone", ""),
-        "address": student.get("address", ""),
-        "photo": student.get("photo", "https://via.placeholder.com/50"),
-        "created_at": student["created_at"],
-        "updated_at": student["updated_at"]
-    }
+    # Handle both old and new data formats
+    if "firstName" in student and "lastName" in student:
+        # New format - data is already in the correct format
+        return {
+            "id": student["id"],
+            "firstName": student.get("firstName", ""),
+            "lastName": student.get("lastName", ""),
+            "gender": student.get("gender", "Male"),
+            "dob": student.get("dob", "2000-01-01"),
+            "studentClass": student.get("studentClass", ""),
+            "enrollmentDate": student.get("enrollmentDate", student["created_at"].strftime("%Y-%m-%d")),
+            "parentName": student.get("parentName", ""),
+            "relationship": student.get("relationship", "Parent"),
+            "parentPhone": student.get("parentPhone", ""),
+            "address": student.get("address", ""),
+            "photo": student.get("photo", "https://via.placeholder.com/50"),
+            "created_at": student["created_at"],
+            "updated_at": student["updated_at"]
+        }
+    else:
+        # Old format - convert from old schema to new schema
+        name_parts = student.get("name", "").split(" ", 1)
+        first_name = name_parts[0] if name_parts else ""
+        last_name = name_parts[1] if len(name_parts) > 1 else ""
+        
+        return {
+            "id": student["id"],
+            "firstName": first_name,
+            "lastName": last_name,
+            "gender": student.get("gender", "Male"),
+            "dob": student.get("dob", "2000-01-01"),
+            "studentClass": student.get("class_name", ""),
+            "enrollmentDate": student.get("enrollmentDate", student["created_at"].strftime("%Y-%m-%d")),
+            "parentName": student.get("parent_name", ""),
+            "relationship": student.get("relationship", "Parent"),
+            "parentPhone": student.get("contact_phone", ""),
+            "address": student.get("address", ""),
+            "photo": student.get("photo", "https://via.placeholder.com/50"),
+            "created_at": student["created_at"],
+            "updated_at": student["updated_at"]
+        }
 
 # Root endpoint
 @app.get("/")
