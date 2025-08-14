@@ -1,75 +1,203 @@
-from fastapi import FastAPI, APIRouter
-from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, EmailStr
+from typing import Optional, List
 import os
-import logging
-from pathlib import Path
-from pydantic import BaseModel, Field
-from typing import List
+from motor.motor_asyncio import AsyncIOMotorClient
 import uuid
 from datetime import datetime
 
+# Environment variables
+MONGO_URL = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
+DB_NAME = os.environ.get("DB_NAME", "test_database")
+CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*").split(",")
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+app = FastAPI(title="School Management System", description="Student enrollment and management system")
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-
-# Create the main app without a prefix
-app = FastAPI()
-
-# Create a router with the /api prefix
-api_router = APIRouter(prefix="/api")
-
-
-# Define Models
-class StatusCheck(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.dict()
-    status_obj = StatusCheck(**status_dict)
-    _ = await db.status_checks.insert_one(status_obj.dict())
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find().to_list(1000)
-    return [StatusCheck(**status_check) for status_check in status_checks]
-
-# Include the router in the main app
-app.include_router(api_router)
-
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# MongoDB connection
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
+students_collection = db.students
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+# Pydantic models
+class StudentCreate(BaseModel):
+    name: str
+    age: int
+    class_name: str
+    contact_email: Optional[EmailStr] = None
+    contact_phone: Optional[str] = None
+    parent_name: Optional[str] = None
+    address: Optional[str] = None
+
+class StudentUpdate(BaseModel):
+    name: Optional[str] = None
+    age: Optional[int] = None
+    class_name: Optional[str] = None
+    contact_email: Optional[EmailStr] = None
+    contact_phone: Optional[str] = None
+    parent_name: Optional[str] = None
+    address: Optional[str] = None
+
+class StudentResponse(BaseModel):
+    id: str
+    name: str
+    age: int
+    class_name: str
+    contact_email: Optional[str] = None
+    contact_phone: Optional[str] = None
+    parent_name: Optional[str] = None
+    address: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+# Utility functions
+def student_helper(student) -> dict:
+    return {
+        "id": student["id"],
+        "name": student["name"],
+        "age": student["age"],
+        "class_name": student["class_name"],
+        "contact_email": student.get("contact_email"),
+        "contact_phone": student.get("contact_phone"),
+        "parent_name": student.get("parent_name"),
+        "address": student.get("address"),
+        "created_at": student["created_at"],
+        "updated_at": student["updated_at"]
+    }
+
+# Root endpoint
+@app.get("/")
+async def root():
+    return {"message": "School Management System API", "status": "running"}
+
+# Health check
+@app.get("/api/health")
+async def health_check():
+    return {"status": "healthy", "service": "school-management-api"}
+
+# Get all students
+@app.get("/api/students", response_model=List[StudentResponse])
+async def get_students(skip: int = 0, limit: int = 100):
+    try:
+        students = await students_collection.find().skip(skip).limit(limit).to_list(limit)
+        return [student_helper(student) for student in students]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching students: {str(e)}")
+
+# Get student by ID
+@app.get("/api/students/{student_id}", response_model=StudentResponse)
+async def get_student(student_id: str):
+    try:
+        student = await students_collection.find_one({"id": student_id})
+        if student:
+            return student_helper(student)
+        raise HTTPException(status_code=404, detail="Student not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching student: {str(e)}")
+
+# Create new student
+@app.post("/api/students", response_model=StudentResponse)
+async def create_student(student: StudentCreate):
+    try:
+        student_dict = student.dict()
+        student_dict["id"] = str(uuid.uuid4())
+        student_dict["created_at"] = datetime.utcnow()
+        student_dict["updated_at"] = datetime.utcnow()
+        
+        result = await students_collection.insert_one(student_dict)
+        if result.inserted_id:
+            new_student = await students_collection.find_one({"id": student_dict["id"]})
+            return student_helper(new_student)
+        raise HTTPException(status_code=500, detail="Failed to create student")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating student: {str(e)}")
+
+# Update student
+@app.put("/api/students/{student_id}", response_model=StudentResponse)
+async def update_student(student_id: str, student_update: StudentUpdate):
+    try:
+        # Check if student exists
+        existing_student = await students_collection.find_one({"id": student_id})
+        if not existing_student:
+            raise HTTPException(status_code=404, detail="Student not found")
+        
+        # Prepare update data
+        update_data = {k: v for k, v in student_update.dict().items() if v is not None}
+        if not update_data:
+            raise HTTPException(status_code=400, detail="No valid fields to update")
+        
+        update_data["updated_at"] = datetime.utcnow()
+        
+        # Update student
+        result = await students_collection.update_one(
+            {"id": student_id},
+            {"$set": update_data}
+        )
+        
+        if result.modified_count:
+            updated_student = await students_collection.find_one({"id": student_id})
+            return student_helper(updated_student)
+        
+        raise HTTPException(status_code=500, detail="Failed to update student")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error updating student: {str(e)}")
+
+# Delete student
+@app.delete("/api/students/{student_id}")
+async def delete_student(student_id: str):
+    try:
+        result = await students_collection.delete_one({"id": student_id})
+        if result.deleted_count:
+            return {"message": "Student deleted successfully", "student_id": student_id}
+        raise HTTPException(status_code=404, detail="Student not found")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting student: {str(e)}")
+
+# Get student statistics
+@app.get("/api/students/stats/overview")
+async def get_student_stats():
+    try:
+        total_students = await students_collection.count_documents({})
+        
+        # Get class distribution
+        pipeline = [
+            {"$group": {"_id": "$class_name", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}
+        ]
+        class_distribution = await students_collection.aggregate(pipeline).to_list(None)
+        
+        # Get age distribution
+        age_pipeline = [
+            {"$group": {"_id": "$age", "count": {"$sum": 1}}},
+            {"$sort": {"_id": 1}}
+        ]
+        age_distribution = await students_collection.aggregate(age_pipeline).to_list(None)
+        
+        return {
+            "total_students": total_students,
+            "class_distribution": class_distribution,
+            "age_distribution": age_distribution
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching statistics: {str(e)}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)
