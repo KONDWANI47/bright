@@ -221,7 +221,7 @@ def main():
         if student_id:
             created_ids.append(student_id)
         else:
-            print(f"❌ Failed to create student: {student['name']}")
+            print(f"❌ Failed to create student: {student['firstName']} {student['lastName']}")
 
     if not created_ids:
         print("❌ No students were created successfully")
