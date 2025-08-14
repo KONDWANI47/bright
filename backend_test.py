@@ -241,9 +241,8 @@ def main():
     # Test updating a student
     if created_ids:
         update_data = {
-            "age": 16,
-            "class_name": "Grade 11-A",
-            "contact_phone": "+1-555-0199"
+            "studentClass": "Standard 8",
+            "parentPhone": "+1-555-0199"
         }
         success, updated_student = tester.test_update_student(created_ids[0], update_data)
         if success:
