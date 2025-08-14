@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Academy - ECD & Primary School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .animate-slideUp {
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        /* Hamburger menu animation */
+        .hamburger-top,
+        .hamburger-middle,
+        .hamburger-bottom {
+            transition: all 0.3s;
+            transform-origin: center;
+        }
+        
+        .open .hamburger-top {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .open .hamburger-middle {
+            opacity: 0;
+        }
+        
+        .open .hamburger-bottom {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        /* Hero section gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(29,78,216,0.9) 0%, rgba(6,182,212,0.9) 100%);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Top Info Bar -->
+    <div class="bg-blue-900 text-white py-2 px-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center">
+                <img src="/placeholder.svg?height=32&width=32&text=Logo" alt="Bright Academy Logo" class="h-8 mr-4">
+                <div class="flex items-center space-x-4 mb-2 md:mb-0">
+                    <a href="https://wa.me/254712345678" class="flex items-center text-green-400 hover:text-green-300">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                    </a>
+                    <a href="tel:+254712345678" class="flex items-center text-blue-300 hover:text-blue-200 whitespace-nowrap">
+                        <i class="fas fa-phone-alt"></i>
+                        <span class="hidden md:inline ml-2 text-sm">+254 712 345 678</span>
+                    </a>
+                    <a href="mailto:info@brightacademy.ac.ke" class="flex items-center text-blue-300 hover:text-blue-200">
+                        <i class="fas fa-envelope"></i>
+                        <span class="hidden md:inline ml-2 text-sm">info@brightacademy.ac.ke</span>
+                    </a>
+                    <a href="#" onclick="showAdminLogin()" class="flex items-center text-white hover:text-blue-300">
+                        <i class="fas fa-user-shield"></i>
+                        <span class="hidden md:inline ml-2 text-sm">Admin</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="relative w-full md:w-auto">
+                <form id="searchForm" class="flex">
+                    <input type="text" placeholder="Search..." class="px-3 py-1 rounded-l text-gray-800 text-sm w-full md:w-64 focus:outline-none">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-r text-white">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <div id="searchResults" class="absolute z-10 bg-white w-full mt-1 rounded shadow-lg hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header with Logo and Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-blue-900">Bright Academy</h1>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="text-blue-900 hover:text-blue-600 font-medium transition">Home</a></li>
+                    <li><a href="#programs" class="text-blue-900 hover:text-blue-600 font-medium transition">Programs</a></li>
+                    <li><a href="#admission" class="text-blue-900 hover:text-blue-600 font-medium transition">Admission</a></li>
+                    <li><a href="#registration" class="text-blue-900 hover:text-blue-600 font-medium transition">Registration</a></li>
+                    <li><a href="#team" class="text-blue-900 hover:text-blue-600 font-medium transition">Team</a></li>
+                    <li><a href="#about" class="text-blue-900 hover:text-blue-600 font-medium transition">About</a></li>
+                    <li><a href="#performance" class="text-blue-900 hover:text-blue-600 font-medium transition">Performance</a></li>
+                    <li><a href="blog.html" class="text-blue-900 hover:text-blue-600 font-medium transition">Blog</a></li>
+                    <li><a href="#contact" class="text-blue-900 hover:text-blue-600 font-medium transition">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button id="menu-btn" class="md:hidden focus:outline-none">
+                <div class="space-y-2">
+                    <span class="hamburger-top block w-6 h-0.5 bg-blue-900"></span>
+                    <span class="hamburger-middle block w-6 h-0.5 bg-blue-900"></span>
+                    <span class="hamburger-bottom block w-6 h-0.5 bg-blue-900"></span>
+                </div>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white absolute w-full left-0 px-4 shadow-lg hidden">
+            <ul class="py-4 space-y-3">
+                <li><a href="#home" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Home</a></li>
+                <li><a href="#programs" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Programs</a></li>
+                <li><a href="#admission" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Admission</a></li>
+                <li><a href="#registration" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Registration</a></li>
+                <li><a href="#team" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Team</a></li>
+                <li><a href="#about" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">About</a></li>
+                <li><a href="#performance" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Performance</a></li>
+                <li><a href="blog.html" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Blog</a></li>
+                <li><a href="#contact" class="block py-2 text-blue-900 hover:text-blue-600 font-medium transition">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-blue-900">Admin Login</h3>
+                    <button onclick="closeAdminLogin()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="adminLoginForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <input type="text" id="adminUsername" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="adminPassword" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div id="loginError" class="text-red-600 text-sm hidden">Invalid username or password</div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeAdminLogin()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient text-white py-20">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 animate-slideUp">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Shaping Bright Futures</h1>
+                <p class="text-xl mb-6">Quality education for ECD and primary school starting from Standard 1 to Standard 8 in a nurturing environment that fosters creativity and academic excellence.</p>
+                
+                <div class="bg-white bg-opacity-20 p-6 rounded-lg mb-6 backdrop-blur-sm">
+                    <h3 class="text-xl font-bold mb-3">How to Join Bright Academy</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-white bg-opacity-30 p-4 rounded-lg">
+                            <h4 class="font-bold mb-2">Registration Fee</h4>
+                            <p>KSh 15,000 (Non-refundable)</p>
+                        </div>
+                        <div class="bg-white bg-opacity-30 p-4 rounded-lg">
+                            <h4 class="font-bold mb-2">Payment Methods</h4>
+                            <ul class="text-sm">
+                                <li>M-Pesa</li>
+                                <li>Bank Transfer</li>
+                                <li>Cash Payment</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white bg-opacity-30 p-4 rounded-lg">
+                            <h4 class="font-bold mb-2">Registration Steps</h4>
+                            <ol class="text-sm list-decimal list-inside">
+                                <li>Complete application form</li>
+                                <li>Pay registration fee</li>
+                                <li>Submit required documents</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex space-x-4">
+                    <a href="#admission" class="bg-white text-blue-900 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition">Enroll Now</a>
+                    <a href="#programs" class="border-2 border-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:text-blue-900 transition">Our Programs</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 animate-fadeIn">
+                <img src="/placeholder.svg?height=400&width=600&text=Happy+Students" alt="Happy students at Bright Academy" class="rounded-lg shadow-2xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Our Educational Programs</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We offer comprehensive programs designed to nurture young minds from early childhood through primary education.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- ECD Program -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition animate-fadeIn">
+                    <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <i class="fas fa-child text-blue-900 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-3">Early Childhood Development</h3>
+                    <p class="text-gray-600 mb-4">Our ECD program focuses on holistic development through play-based learning, social interaction, and foundational skills.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Play Group (2-3 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Pre-Primary 1 (3-4 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Pre-Primary 2 (4-5 years)</li>
+                    </ul>
+                </div>
+                
+                <!-- Lower Primary -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition animate-fadeIn" style="animation-delay: 0.2s;">
+                    <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <i class="fas fa-book-open text-blue-900 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-3">Lower Primary</h3>
+                    <p class="text-gray-600 mb-4">Grades 1-3 where we build strong foundations in literacy, numeracy, and social skills through engaging activities.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Grade 1 (6-7 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Grade 2 (7-8 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Grade 3 (8-9 years)</li>
+                    </ul>
+                </div>
+                
+                <!-- Upper Primary -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition animate-fadeIn" style="animation-delay: 0.4s;">
+                    <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-blue-900 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-3">Upper Primary</h3>
+                    <p class="text-gray-600 mb-4">Grades 4-8 preparing students for secondary education with a rigorous curriculum and extracurricular activities.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Grade 4-6 (9-12 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Grade 7-8 (12-14 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> KCPE Preparation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission Section -->
+    <section id="admission" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Admission Process</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We welcome students throughout the year based on availability. Here's how to join our learning community.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-900 animate-slideUp">
+                    <div class="text-blue-900 font-bold text-2xl mb-2">1</div>
+                    <h3 class="text-lg font-bold text-blue-900 mb-2">Inquiry</h3>
+                    <p class="text-gray-700">Contact us via phone, email or visit our school for information.</p>
+                </div>
+                
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-900 animate-slideUp" style="animation-delay: 0.2s;">
+                    <div class="text-blue-900 font-bold text-2xl mb-2">2</div>
+                    <h3 class="text-lg font-bold text-blue-900 mb-2">School Tour</h3>
+                    <p class="text-gray-700">Schedule a visit to see our facilities and meet our staff.</p>
+                </div>
+                
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-900 animate-slideUp" style="animation-delay: 0.4s;">
+                    <div class="text-blue-900 font-bold text-2xl mb-2">3</div>
+                    <h3 class="text-lg font-bold text-blue-900 mb-2">Application</h3>
+                    <p class="text-gray-700">Complete the application form and submit required documents.</p>
+                </div>
+                
+                <div class="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-900 animate-slideUp" style="animation-delay: 0.6s;">
+                    <div class="text-blue-900 font-bold text-2xl mb-2">4</div>
+                    <h3 class="text-lg font-bold text-blue-900 mb-2">Enrollment</h3>
+                    <p class="text-gray-700">Pay fees and officially join our learning community.</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-blue-100 rounded-lg p-8 animate-fadeIn">
+                <div class="md:flex items-center">
+                    <div class="md:w-2/3 mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold text-blue-900 mb-2">Ready to Join Us?</h3>
+                        <p class="text-gray-700">Download our admission package for detailed information on requirements, fees, and school policies.</p>
+                    </div>
+                    <div class="md:w-1/3 text-center md:text-right">
+                        <button class="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-bold transition">Download Admission Package</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="registration" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Online Registration</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Register your child conveniently through our online portal. Save time and complete the process from home.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden animate-slideUp">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-blue-900 text-white p-8">
+                        <h3 class="text-2xl font-bold mb-4">Registration Requirements</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <span>Birth Certificate (Copy)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <span>Previous School Report (If applicable)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <span>Immunization Records (ECD only)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <span>2 Passport Photos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                <span>Parent/Guardian ID Copy</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-8">
+                        <h3 class="text-2xl font-bold text-blue-900 mb-6">Registration Form</h3>
+                        <form id="registrationForm">
+                            <div class="mb-4">
+                                <label for="studentName" class="block text-gray-700 mb-2">Student Full Name</label>
+                                <input type="text" id="studentName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="grade" class="block text-gray-700 mb-2">Grade Applying For</label>
+                                <select id="grade" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Select Grade</option>
+                                    <option value="Play Group">Play Group</option>
+                                    <option value="PP1">Pre-Primary 1</option>
+                                    <option value="PP2">Pre-Primary 2</option>
+                                    <option value="Grade 1">Standard 1</option>
+                                    <option value="Grade 2">Standard 2</option>
+                                    <option value="Grade 3">Standard 3</option>
+                                    <option value="Grade 4">Standard 4</option>
+                                    <option value="Grade 5">Standard 5</option>
+                                    <option value="Grade 6">Standard 6</option>
+                                    <option value="Grade 7">Standard 7</option>
+                                    <option value="Grade 8">Standard 8</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="parentName" class="block text-gray-700 mb-2">Parent/Guardian Name</label>
+                                <input type="text" id="parentName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="parentEmail" class="block text-gray-700 mb-2">Email Address</label>
+                                <input type="email" id="parentEmail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="parentPhone" class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="parentPhone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 rounded-lg font-bold transition">Submit Registration</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center animate-fadeIn">
+                <p class="text-gray-600 mb-4">Need help with registration? Contact our admissions office.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="tel:+254712345678" class="flex items-center bg-blue-100 text-blue-900 px-4 py-2 rounded-lg">
+                        <i class="fas fa-phone-alt mr-2"></i> +254 712 345 678
+                    </a>
+                    <a href="mailto:admissions@brightacademy.ac.ke" class="flex items-center bg-blue-100 text-blue-900 px-4 py-2 rounded-lg">
+                        <i class="fas fa-envelope mr-2"></i> admissions@brightacademy.ac.ke
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Meet Our Team</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our dedicated team of educators and staff are committed to providing quality education and care for your child.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 animate-fadeIn">
+                    <img src="/placeholder.svg?height=300&width=400&text=Principal" alt="Principal" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-blue-900 mb-1">Mrs. Jane Mwangi</h3>
+                        <p class="text-blue-600 font-medium mb-3">School Principal</p>
+                        <p class="text-gray-600 text-sm">With over 15 years of experience in education, Mrs. Mwangi leads our school with vision and dedication.</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 animate-fadeIn" style="animation-delay: 0.2s;">
+                    <img src="/placeholder.svg?height=300&width=400&text=ECD+Head" alt="ECD Head" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-blue-900 mb-1">Mr. David Ochieng</h3>
+                        <p class="text-blue-600 font-medium mb-3">ECD Coordinator</p>
+                        <p class="text-gray-600 text-sm">Specialized in early childhood development with a passion for nurturing young minds through play.</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 animate-fadeIn" style="animation-delay: 0.4s;">
+                    <img src="/placeholder.svg?height=300&width=400&text=Upper+Primary+Head" alt="Upper Primary Head" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-blue-900 mb-1">Ms. Sarah Kamau</h3>
+                        <p class="text-blue-600 font-medium mb-3">Upper Primary Head</p>
+                        <p class="text-gray-600 text-sm">Expert in KCPE preparation with a track record of excellent results year after year.</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 animate-fadeIn" style="animation-delay: 0.6s;">
+                    <img src="/placeholder.svg?height=300&width=400&text=Administrator" alt="Administrator" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-blue-900 mb-1">Mr. Peter Maina</h3>
+                        <p class="text-blue-600 font-medium mb-3">School Administrator</p>
+                        <p class="text-gray-600 text-sm">Ensures smooth operations and parent communication for all school matters.</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-blue-600 hover:text-blue-900"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center animate-fadeIn">
+                <p class="text-gray-600 mb-6">We're always looking for passionate educators to join our team.</p>
+                <a href="#contact" class="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-bold inline-block transition">Contact Us About Job Openings</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10 animate-slideUp">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-6">About Bright Academy</h2>
+                    <p class="text-gray-700 mb-4">Founded in 2010, Bright Academy has grown from a small ECD center to a full-fledged primary school offering quality education from Early Childhood Development through Standard 8.</p>
+                    <p class="text-gray-700 mb-4">Our mission is to provide a nurturing environment that fosters academic excellence, creativity, and character development. We believe every child has unique potential waiting to be unlocked.</p>
+                    <p class="text-gray-700 mb-6">With modern facilities, a low student-teacher ratio, and a curriculum that balances academics with co-curricular activities, we prepare students not just for exams, but for life.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="text-blue-900 font-bold text-2xl mb-1">500+</div>
+                            <div class="text-gray-600 text-sm">Students Enrolled</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="text-blue-900 font-bold text-2xl mb-1">30+</div>
+                            <div class="text-gray-600 text-sm">Qualified Staff</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="text-blue-900 font-bold text-2xl mb-1">14</div>
+                            <div class="text-gray-600 text-sm">Years of Experience</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="text-blue-900 font-bold text-2xl mb-1">100%</div>
+                            <div class="text-gray-600 text-sm">Transition to Secondary</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 animate-fadeIn">
+                    <div class="relative">
+                        <img src="/placeholder.svg?height=400&width=600&text=School+Building" alt="School Building" class="rounded-lg shadow-xl w-full">
+                        <div class="absolute -bottom-6 -right-6 bg-blue-900 text-white p-6 rounded-lg shadow-lg w-2/3">
+                            <h3 class="font-bold text-lg mb-2">Our Vision</h3>
+                            <p class="text-sm">To be a leading educational institution that develops innovative, ethical leaders for Kenya and beyond.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 animate-fadeIn">
+                <h3 class="text-2xl font-bold text-blue-900 mb-6 text-center">Why Choose Bright Academy?</h3>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="fas fa-book text-blue-900"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-900 mb-2">Balanced Curriculum</h4>
+                        <p class="text-gray-600 text-sm">We combine the 8-4-4 curriculum with modern teaching methods and co-curricular activities for holistic development.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="fas fa-chalkboard-teacher text-blue-900"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-900 mb-2">Qualified Teachers</h4>
+                        <p class="text-gray-600 text-sm">Our teachers are TSC certified with specialized training in child-centered learning approaches.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="fas fa-laptop text-blue-900"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-900 mb-2">Technology Integration</h4>
+                        <p class="text-gray-600 text-sm">We incorporate digital literacy from an early age with our computer lab and smart classroom technologies.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="fas fa-utensils text-blue-900"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-900 mb-2">Nutrition Program</h4>
+                        <p class="text-gray-600 text-sm">Healthy, balanced meals prepared on-site by our nutritionist to support learning and growth.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="fas fa-bus text-blue-900"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-900 mb-2">Transportation</h4>
+                        <p class="text-gray-600 text-sm">Safe, reliable school buses with trained attendants serving major neighborhoods.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
+                        <div class="bg-blue-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                            <i class="fas fa-heart text-blue-900"></i>
+                        </div>
+                        <h4 class="font-bold text-blue-900 mb-2">Pastoral Care</h4>
+                        <p class="text-gray-600 text-sm">We prioritize emotional well-being with counseling services and character development programs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Our Academic Performance</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Outstanding results from our Standard 8 graduates in the Kenya Certificate of Primary Education (KCPE) examinations</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-blue-50 p-8 rounded-lg border-l-4 border-blue-900 animate-slideUp">
+                    <h3 class="text-xl font-bold text-blue-900 mb-4">2023 Standard 8 Results</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Total Candidates:</span>
+                            <span class="font-bold">85</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Mean Score:</span>
+                            <span class="font-bold">285 marks</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Selected to National Schools:</span>
+                            <span class="font-bold">12 students</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Selected to Provincial Schools:</span>
+                            <span class="font-bold">25 students</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Selected to District Schools:</span>
+                            <span class="font-bold">35 students</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">Other Secondary Schools:</span>
+                            <span class="font-bold">13 students</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="animate-fadeIn">
+                    <h3 class="text-xl font-bold text-blue-900 mb-4">Performance Trends</h3>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center mb-4">
+                            <div class="w-1/3 font-medium">Year</div>
+                            <div class="w-1/3 font-medium text-center">Mean Score</div>
+                            <div class="w-1/3 font-medium text-right">National Schools</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <div class="w-1/3">2023</div>
+                                <div class="w-1/3 text-center">285</div>
+                                <div class="w-1/3 text-right">12 students</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-1/3">2022</div>
+                                <div class="w-1/3 text-center">278</div>
+                                <div class="w-1/3 text-right">8 students</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-1/3">2021</div>
+                                <div class="w-1/3 text-center">272</div>
+                                <div class="w-1/3 text-right">5 students</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center animate-fadeIn">
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">Notable Achievements</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <div class="text-blue-900 text-4xl font-bold mb-2">3</div>
+                        <p class="text-gray-700">Students in National Top 100 (2023)</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <div class="text-blue-900 text-4xl font-bold mb-2">100%</div>
+                        <p class="text-gray-700">Transition to Secondary (5-year average)</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <div class="text-blue-900 text-4xl font-bold mb-2">15+</div>
+                        <p class="text-gray-700">Scholarships Awarded Annually</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-blue-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+                <p class="max-w-2xl mx-auto">We'd love to hear from you! Reach out for inquiries, school tours, or more information about our programs.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="animate-slideUp">
+                    <h3 class="text-xl font-bold mb-6">Get In Touch</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-blue-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Address</h4>
+                                <p>123 Education Road, Nairobi</p>
+                                <p>P.O. Box 4567-00100</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Phone</h4>
+                                <p>+254 712 345 678 (Office)</p>
+                                <p>+254 723 456 789 (Admissions)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Email</h4>
+                                <p>info@brightacademy.ac.ke</p>
+                                <p>admissions@brightacademy.ac.ke</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-800 p-3 rounded-full mr-4">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Office Hours</h4>
+                                <p>Monday - Friday: 7:30 AM - 5:00 PM</p>
+                                <p>Saturday: 9:00 AM - 1:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-bold mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-blue-800 hover:bg-blue-700 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="bg-blue-800 hover:bg-blue-700 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="bg-blue-800 hover:bg-blue-700 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-blue-800 hover:bg-blue-700 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="bg-blue-800 hover:bg-blue-700 w-10 h-10 rounded-full flex items-center justify-center transition">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="animate-fadeIn">
+                    <h3 class="text-xl font-bold mb-6">Send Us a Message</h3>
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label for="name" class="block mb-1">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 rounded bg-blue-800 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block mb-1">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 rounded bg-blue-800 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block mb-1">Phone Number</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-2 rounded bg-blue-800 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block mb-1">Subject</label>
+                            <select id="subject" class="w-full px-4 py-2 rounded bg-blue-800 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Select Subject</option>
+                                <option value="Admission">Admission Inquiry</option>
+                                <option value="Tour">School Tour Request</option>
+                                <option value="Feedback">Feedback/Suggestion</option>
+                                <option value="Employment">Employment Opportunity</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 rounded bg-blue-800 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="bg-white text-blue-900 hover:bg-gray-100 px-6 py-3 rounded-lg font-bold transition w-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <div class="h-96 bg-gray-200">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.808567245307!2d36.82154831475399!3d-1.292235835980772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d71b2a5c1f%3A0x1d3e0e2a22d6e1b8!2sNairobi%20City%20Centre!5e0!3m2!1sen!2ske!4v1623840000000!5m2!1sen!2ske" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="/placeholder.svg?height=48&width=48&text=Logo" alt="Bright Academy Logo" class="h-12 mb-4">
+                    <h3 class="text-xl font-bold text-white mb-4">Bright Academy</h3>
+                    <p class="text-sm">Providing quality education from ECD through Standard 8 in a nurturing environment that fosters creativity and academic excellence.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-white transition">Home</a></li>
+                        <li><a href="#programs" class="hover:text-white transition">Programs</a></li>
+                        <li><a href="#admission" class="hover:text-white transition">Admission</a></li>
+                        <li><a href="#registration" class="hover:text-white transition">Registration</a></li>
+                        <li><a href="#team" class="hover:text-white transition">Our Team</a></li>
+                        <li><a href="#about" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Programs</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Early Childhood Development</a></li>
+                        <li><a href="#" class="hover:text-white transition">Lower Primary (Grade 1-3)</a></li>
+                        <li><a href="#" class="hover:text-white transition">Upper Primary (Grade 4-6)</a></li>
+                        <li><a href="#" class="hover:text-white transition">KCPE Preparation (Grade 7-8)</a></li>
+                        <li><a href="#" class="hover:text-white transition">Co-Curricular Activities</a></li>
+                        <li><a href="#" class="hover:text-white transition">Holiday Programs</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Newsletter</h3>
+                    <p class="text-sm mb-4">Subscribe to our newsletter to receive updates on school events, academic calendars, and important announcements.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-3 py-2 rounded-l text-gray-800 text-sm w-full focus:outline-none">
+                        <button type="submit" class="bg-blue-900 hover:bg-blue-800 px-3 py-2 rounded-r text-white">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="pt-6 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm mb-4 md:mb-0">© 2024 Bright Academy. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/254712345678" class="fixed bottom-6 left-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-600 transition z-50">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-blue-900 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-blue-800 transition z-50 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">About Us</h4>
+                    <p class="text-gray-300">Bright Academy is dedicated to providing quality education and fostering a love of learning in young children.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-300">Home</a></li>
+                        <li><a href="#" class="hover:text-blue-300">About</a></li>
+                        <li><a href="#" class="hover:text-blue-300">Programs</a></li>
+                        <li><a href="#" class="hover:text-blue-300">Blog</a></li>
+                        <li><a href="#" class="hover:text-blue-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Information</h4>
+                    <p class="text-gray-300">Address: 123 Academy Street, Anytown</p>
+                    <p class="text-gray-300">Email: info@brightacademy.com</p>
+                    <p class="text-gray-300">Phone: (123) 456-7890</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter text-2xl"></i></a>
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-gray-400">© 2023 Bright Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+<script src="enhanced-script.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+</body>
+</html>
