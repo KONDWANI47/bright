@@ -236,7 +236,7 @@ def main():
     if created_ids:
         success, student_data = tester.test_get_student_by_id(created_ids[0])
         if success:
-            print(f"   Retrieved student: {student_data.get('name', 'N/A')}")
+            print(f"   Retrieved student: {student_data.get('firstName', 'N/A')} {student_data.get('lastName', '')}")
 
     # Test updating a student
     if created_ids:
