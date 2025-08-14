@@ -246,7 +246,7 @@ def main():
         }
         success, updated_student = tester.test_update_student(created_ids[0], update_data)
         if success:
-            print(f"   Updated student age to: {updated_student.get('age', 'N/A')}")
+            print(f"   Updated student class to: {updated_student.get('studentClass', 'N/A')}")
 
     # Test statistics after adding students
     success, final_stats = tester.test_get_stats()
