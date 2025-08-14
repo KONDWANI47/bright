@@ -210,15 +210,24 @@ class NotificationResponse(BaseModel):
 
 # Utility functions
 def student_helper(student) -> dict:
+    # Map database fields to response model fields
+    name_parts = student.get("name", "").split(" ", 1)
+    first_name = name_parts[0] if name_parts else ""
+    last_name = name_parts[1] if len(name_parts) > 1 else ""
+    
     return {
         "id": student["id"],
-        "name": student["name"],
-        "age": student["age"],
-        "class_name": student["class_name"],
-        "contact_email": student.get("contact_email"),
-        "contact_phone": student.get("contact_phone"),
-        "parent_name": student.get("parent_name"),
-        "address": student.get("address"),
+        "firstName": first_name,
+        "lastName": last_name,
+        "gender": student.get("gender", "Male"),  # Default value
+        "dob": student.get("dob", "2000-01-01"),  # Default value
+        "studentClass": student.get("class_name", ""),
+        "enrollmentDate": student.get("enrollmentDate", student["created_at"].strftime("%Y-%m-%d")),
+        "parentName": student.get("parent_name", ""),
+        "relationship": student.get("relationship", "Parent"),  # Default value
+        "parentPhone": student.get("contact_phone", ""),
+        "address": student.get("address", ""),
+        "photo": student.get("photo", "https://via.placeholder.com/50"),
         "created_at": student["created_at"],
         "updated_at": student["updated_at"]
     }
