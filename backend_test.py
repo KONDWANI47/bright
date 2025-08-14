@@ -150,33 +150,42 @@ def main():
     # Setup
     tester = SchoolManagementAPITester()
     
-    # Test data
+    # Test data - using the correct backend schema
     test_students = [
         {
-            "name": "Alice Johnson",
-            "age": 15,
-            "class_name": "Grade 10-A",
-            "contact_email": "alice.johnson@email.com",
-            "contact_phone": "+1-555-0101",
-            "parent_name": "Robert Johnson",
+            "firstName": "Alice",
+            "lastName": "Johnson",
+            "gender": "Female",
+            "dob": "2009-01-15",
+            "studentClass": "Standard 8",
+            "enrollmentDate": "2024-01-15",
+            "parentName": "Robert Johnson",
+            "relationship": "Father",
+            "parentPhone": "+1-555-0101",
             "address": "123 Oak Street, Springfield, IL 62701"
         },
         {
-            "name": "Bob Smith",
-            "age": 12,
-            "class_name": "Grade 7-B",
-            "contact_email": "bob.smith@email.com",
-            "contact_phone": "+1-555-0102",
-            "parent_name": "Sarah Smith",
+            "firstName": "Bob",
+            "lastName": "Smith",
+            "gender": "Male",
+            "dob": "2012-03-20",
+            "studentClass": "Standard 5",
+            "enrollmentDate": "2024-01-20",
+            "parentName": "Sarah Smith",
+            "relationship": "Mother",
+            "parentPhone": "+1-555-0102",
             "address": "456 Pine Avenue, Springfield, IL 62702"
         },
         {
-            "name": "Carol Davis",
-            "age": 8,
-            "class_name": "Grade 3-A",
-            "contact_email": "carol.davis@email.com",
-            "contact_phone": "+1-555-0103",
-            "parent_name": "Michael Davis",
+            "firstName": "Carol",
+            "lastName": "Davis",
+            "gender": "Female",
+            "dob": "2016-07-10",
+            "studentClass": "Standard 2",
+            "enrollmentDate": "2024-01-25",
+            "parentName": "Michael Davis",
+            "relationship": "Father",
+            "parentPhone": "+1-555-0103",
             "address": "789 Elm Drive, Springfield, IL 62703"
         }
     ]
