@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Academy Blog - ECD & Primary Education</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .category-chip {
+            transition: all 0.3s ease;
+        }
+        .category-chip:hover {
+            transform: scale(1.05);
+        }
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="bg-yellow-400 rounded-full w-12 h-12 flex items-center justify-center mr-3">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Bright Academy</h1>
+                        <p class="text-sm text-gray-600">ECD & Primary Education (Std 1-8)</p>
+                    </div>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-4">
+                    <a href="index.html" class="text-gray-800 hover:text-blue-600 font-medium">Home</a>
+                    <a href="index.html#about" class="text-gray-800 hover:text-blue-600 font-medium">About</a>
+                    <a href="index.html#programs" class="text-gray-800 hover:text-blue-600 font-medium">Programs</a>
+                    <a href="teachers.html" class="text-gray-800 hover:text-blue-600 font-medium">Teachers</a>
+                    <a href="blog.html" class="text-blue-600 font-medium">Blog</a>
+                    <a href="index.html#contact" class="text-gray-800 hover:text-blue-600 font-medium">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-700 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Bright Academy Blog</h1>
+            <p class="text-xl md:text-2xl mb-8">Insights, News & Resources for Early Childhood and Primary Education</p>
+            <div class="max-w-2xl mx-auto relative">
+                <input type="text" placeholder="Search articles..." class="w-full py-3 px-6 rounded-full text-gray-800 focus:outline-none">
+                <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-yellow-400 text-gray-800 rounded-full p-2 hover:bg-yellow-300">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Blog Posts Section -->
+            <div class="lg:w-2/3">
+                <h2 class="text-3xl font-bold mb-8 text-gray-800 border-b pb-2">Latest Articles</h2>
+                
+                <!-- Featured Post -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden mb-10 post-card transition duration-300">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                                 alt="Children learning" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 md:w-1/2">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded category-chip">ECD</span>
+                                <span class="text-gray-500 text-sm ml-2">June 15, 2023</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3 text-gray-800">The Importance of Play in Early Childhood Development</h3>
+                            <p class="text-gray-600 mb-4">Discover how structured and unstructured play contributes to cognitive, social, and emotional development in young children at our ECD program.</p>
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author" class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">Mrs. Sarah Johnson</p>
+                                    <p class="text-xs text-gray-500">ECD Head Teacher</p>
+                                </div>
+                                <a href="#" class="ml-auto text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                                    Read More <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Regular Posts -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Post 1 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden post-card transition duration-300">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Math class" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded category-chip">Mathematics</span>
+                                <span class="text-gray-500 text-sm ml-2">June 10, 2023</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Making Math Fun for Standard 4-6 Students</h3>
+                            <p class="text-gray-600 mb-4">Our innovative approach to teaching mathematics helps students overcome fear and develop genuine interest in the subject.</p>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 2 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden post-card transition duration-300">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="Science experiment" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded category-chip">Science</span>
+                                <span class="text-gray-500 text-sm ml-2">June 5, 2023</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Hands-on Science Experiments for Standard 7-8</h3>
+                            <p class="text-gray-600 mb-4">How our practical science program is preparing students for secondary education with real-world applications.</p>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 3 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden post-card transition duration-300">
+                        <img src="https://images.unsplash.com/photo-1522661067900-ab829854a57f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Reading time" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded category-chip">Literacy</span>
+                                <span class="text-gray-500 text-sm ml-2">May 28, 2023</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Improving Reading Skills in Standard 1-3</h3>
+                            <p class="text-gray-600 mb-4">Our phonics-based reading program has shown remarkable results in improving literacy rates among younger students.</p>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read More →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 4 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden post-card transition duration-300">
+                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="Sports day" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded category-chip">Activities</span>
+                                <span class="text-gray-500 text-sm ml-2">May 20, 2023</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">Annual Sports Day Highlights 2023</h3>
+                            <p class="text-gray-600 mb-4">Relive the excitement of our biggest sports event of the year that promotes teamwork and healthy competition.</p>
+                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="flex justify-center mt-12">
+                    <nav class="inline-flex rounded-md shadow">
+                        <a href="#" class="px-4 py-2 rounded-l-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50 font-medium">1</a>
+                        <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50">2</a>
+                        <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-50">3</a>
+                        <a href="#" class="px-4 py-2 rounded-r-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="lg:w-1/3 space-y-8">
+                <!-- About Widget -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">About Bright Academy</h3>
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df9012c7f1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" 
+                         alt="School building" class="w-full h-40 object-cover rounded-lg mb-4">
+                    <p class="text-gray-600 mb-4">Bright Academy provides quality education from Early Childhood Development through Standard 8, nurturing young minds with innovative teaching methods.</p>
+                    <a href="index.html#about" class="text-blue-600 hover:text-blue-800 font-medium">Learn More →</a>
+                </div>
+                
+                <!-- Categories Widget -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex justify-between items-center text-gray-700 hover:text-blue-600">
+                            <span>Early Childhood (ECD)</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
+                        </a></li>
+                        <li><a href="#" class="flex justify-between items-center text-gray-700 hover:text-blue-600">
+                            <span>Lower Primary (Std 1-3)</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">18</span>
+                        </a></li>
+                        <li><a href="#" class="flex justify-between items-center text-gray-700 hover:text-blue-600">
+                            <span>Upper Primary (Std 4-6)</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">15</span>
+                        </a></li>
+                        <li><a href="#" class="flex justify-between items-center text-gray-700 hover:text-blue-600">
+                            <span>Transition Class (Std 7-8)</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">9</span>
+                        </a></li>
+                        <li><a href="#" class="flex justify-between items-center text-gray-700 hover:text-blue-600">
+                            <span>School Activities</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">7</span>
+                        </a></li>
+                        <li><a href="#" class="flex justify-between items-center text-gray-700 hover:text-blue-600">
+                            <span>Parenting Tips</span>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">5</span>
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <!-- Popular Posts -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Popular Articles</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" 
+                                 alt="Homework" class="w-16 h-16 object-cover rounded">
+                            <div>
+                                <h4 class="font-medium text-gray-800 hover:text-blue-600"><a href="#">Homework Strategies for Young Learners</a></h4>
+                                <p class="text-sm text-gray-500">May 15, 2023</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <img src="https://images.unsplash.com/photo-1588072432904-843af37f03ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1588&q=80" 
+                                 alt="Technology" class="w-16 h-16 object-cover rounded">
+                            <div>
+                                <h4 class="font-medium text-gray-800 hover:text-blue-600"><a href="#">Technology in the Primary Classroom</a></h4>
+                                <p class="text-sm text-gray-500">April 28, 2023</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <img src="https://images.unsplash.com/photo-1605722625766-a5c0475f4bf3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                 alt="Nutrition" class="w-16 h-16 object-cover rounded">
+                            <div>
+                                <h4 class="font-medium text-gray-800 hover:text-blue-600"><a href="#">Nutrition Tips for School-Age Children</a></h4>
+                                <p class="text-sm text-gray-500">April 10, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="bg-blue-700 rounded-xl shadow-md p-6 text-white">
+                    <h3 class="text-xl font-bold mb-3">Subscribe to Our Newsletter</h3>
+                    <p class="mb-4">Get the latest education tips, school news, and event updates directly to your inbox.</p>
+                    <form class="space-y-3">
+                        <input type="text" placeholder="Your Name" class="w-full py-2 px-4 rounded newsletter-input text-gray-800">
+                        <input type="email" placeholder="Email Address" class="w-full py-2 px-4 rounded newsletter-input text-gray-800">
+                        <button type="submit" class="w-full bg-yellow-400 text-gray-800 font-medium py-2 px-4 rounded hover:bg-yellow-300 transition duration-300">
+                            Subscribe Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">About Us</h4>
+                    <p class="text-gray-300">Bright Academy is dedicated to providing quality education and fostering a love of learning in young children.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-blue-300">Home</a></li>
+                        <li><a href="index.html#about" class="hover:text-blue-300">About</a></li>
+                        <li><a href="index.html#programs" class="hover:text-blue-300">Programs</a></li>
+                        <li><a href="blog.html" class="hover:text-blue-300">Blog</a></li>
+                        <li><a href="index.html#contact" class="hover:text-blue-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Information</h4>
+                    <p class="text-gray-300">Address: 123 Academy Street, Anytown</p>
+                    <p class="text-gray-300">Email: info@brightacademy.com</p>
+                    <p class="text-gray-300">Phone: (123) 456-7890</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook-f text-2xl"></i></a>
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter text-2xl"></i></a>
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-gray-400">© 2023 Bright Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
