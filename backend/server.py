@@ -1,18 +1,27 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
+from enum import Enum
+import bcrypt
+from jose import JWTError, jwt
+import asyncio
 
 # Environment variables
 MONGO_URL = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
 DB_NAME = os.environ.get("DB_NAME", "test_database")
 CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*").split(",")
+SECRET_KEY = "bright_academy_secret_key_2024"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-app = FastAPI(title="School Management System", description="Student enrollment and management system")
+app = FastAPI(title="Bright Academy Management System", description="Complete school management system with MongoDB backend")
 
 # CORS middleware
 app.add_middleware(
@@ -27,6 +36,34 @@ app.add_middleware(
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
 students_collection = db.students
+teachers_collection = db.teachers
+grades_collection = db.grades
+users_collection = db.users
+notifications_collection = db.notifications
+
+# Enums
+class Gender(str, Enum):
+    male = "Male"
+    female = "Female"
+
+class StudentClass(str, Enum):
+    play_group = "Play Group"
+    pp1 = "PP1"
+    pp2 = "PP2"
+    ecd = "ECD"
+    standard_1 = "Standard 1"
+    standard_2 = "Standard 2"
+    standard_3 = "Standard 3"
+    standard_4 = "Standard 4"
+    standard_5 = "Standard 5"
+    standard_6 = "Standard 6"
+    standard_7 = "Standard 7"
+    standard_8 = "Standard 8"
+
+class TermEnum(str, Enum):
+    term_1 = "Term 1"
+    term_2 = "Term 2"
+    term_3 = "Term 3"
 
 # Pydantic models
 class StudentCreate(BaseModel):
