@@ -67,34 +67,146 @@ class TermEnum(str, Enum):
 
 # Pydantic models
 class StudentCreate(BaseModel):
-    name: str
-    age: int
-    class_name: str
-    contact_email: Optional[EmailStr] = None
-    contact_phone: Optional[str] = None
-    parent_name: Optional[str] = None
-    address: Optional[str] = None
+    firstName: str
+    lastName: str
+    gender: Gender
+    dob: str
+    studentClass: StudentClass
+    enrollmentDate: str
+    parentName: str
+    relationship: str
+    parentPhone: str
+    address: str
+    photo: Optional[str] = "https://via.placeholder.com/50"
 
 class StudentUpdate(BaseModel):
-    name: Optional[str] = None
-    age: Optional[int] = None
-    class_name: Optional[str] = None
-    contact_email: Optional[EmailStr] = None
-    contact_phone: Optional[str] = None
-    parent_name: Optional[str] = None
+    firstName: Optional[str] = None
+    lastName: Optional[str] = None
+    gender: Optional[Gender] = None
+    dob: Optional[str] = None
+    studentClass: Optional[StudentClass] = None
+    enrollmentDate: Optional[str] = None
+    parentName: Optional[str] = None
+    relationship: Optional[str] = None
+    parentPhone: Optional[str] = None
     address: Optional[str] = None
+    photo: Optional[str] = None
 
 class StudentResponse(BaseModel):
     id: str
-    name: str
-    age: int
-    class_name: str
-    contact_email: Optional[str] = None
-    contact_phone: Optional[str] = None
-    parent_name: Optional[str] = None
-    address: Optional[str] = None
+    firstName: str
+    lastName: str
+    gender: str
+    dob: str
+    studentClass: str
+    enrollmentDate: str
+    parentName: str
+    relationship: str
+    parentPhone: str
+    address: str
+    photo: str
     created_at: datetime
     updated_at: datetime
+
+class TeacherCreate(BaseModel):
+    firstName: str
+    lastName: str
+    gender: Gender
+    dob: str
+    email: EmailStr
+    phone: str
+    qualification: str
+    hireDate: str
+    subjects: str
+    classes: str
+    address: str
+    photo: Optional[str] = "https://via.placeholder.com/50"
+
+class TeacherUpdate(BaseModel):
+    firstName: Optional[str] = None
+    lastName: Optional[str] = None
+    gender: Optional[Gender] = None
+    dob: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+    qualification: Optional[str] = None
+    hireDate: Optional[str] = None
+    subjects: Optional[str] = None
+    classes: Optional[str] = None
+    address: Optional[str] = None
+    photo: Optional[str] = None
+
+class TeacherResponse(BaseModel):
+    id: str
+    firstName: str
+    lastName: str
+    gender: str
+    dob: str
+    email: str
+    phone: str
+    qualification: str
+    hireDate: str
+    subjects: str
+    classes: str
+    address: str
+    photo: str
+    created_at: datetime
+    updated_at: datetime
+
+class GradeCreate(BaseModel):
+    studentId: str
+    term: TermEnum
+    english: int
+    chichewa: int
+    math: int
+    science: int
+    socialStudies: int
+    comments: Optional[str] = ""
+
+class GradeUpdate(BaseModel):
+    term: Optional[TermEnum] = None
+    english: Optional[int] = None
+    chichewa: Optional[int] = None
+    math: Optional[int] = None
+    science: Optional[int] = None
+    socialStudies: Optional[int] = None
+    comments: Optional[str] = None
+
+class GradeResponse(BaseModel):
+    id: str
+    studentId: str
+    studentName: str
+    studentClass: str
+    term: str
+    english: int
+    chichewa: int
+    math: int
+    science: int
+    socialStudies: int
+    average: float
+    grade: str
+    comments: str
+    created_at: datetime
+    updated_at: datetime
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class NotificationCreate(BaseModel):
+    title: str
+    message: str
+    type: str = "info"  # info, success, warning, error
+    target_audience: str = "all"  # all, students, teachers
+
+class NotificationResponse(BaseModel):
+    id: str
+    title: str
+    message: str
+    type: str
+    target_audience: str
+    created_at: datetime
+    read: bool = False
 
 # Utility functions
 def student_helper(student) -> dict:
